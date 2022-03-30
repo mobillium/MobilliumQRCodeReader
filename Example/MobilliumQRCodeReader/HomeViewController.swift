@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MobilliumQRCodeReader
 
 class HomeViewController: UIViewController {
     
@@ -74,6 +75,14 @@ extension HomeViewController {
     
     @objc
     private func readQRCodeButtonTapped() {
-        // FIXME: - Present QR Code Reader
+        let viewController = QRCodeReaderViewController()
+        viewController.modalTransitionStyle = .coverVertical
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
+        viewController.getQrCodeClosure = { [weak self] text in
+            DispatchQueue.main.async {
+                self?.outputLabel.text = text
+            }
+        }
     }
 }
