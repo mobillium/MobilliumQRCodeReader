@@ -147,8 +147,24 @@
 		A2C4F68827F450C300227D63 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				A2C4F68D27F45D0700227D63 /* Assets */,
+				A2C4F68C27F45CCC00227D63 /* Classes */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		A2C4F68C27F45CCC00227D63 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A2C4F68D27F45D0700227D63 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		B769CD12AF16D90D5F3A39B695386BD3 /* Pods-MobilliumQRCodeReader_Example */ = {
@@ -322,6 +338,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					C2D598EB705C8719CB9B04FEF15443B2 = {
+						LastSwiftMigration = 1330;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -414,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0D353A81215DDD08EB42CC2EA241201F /* MobilliumQRCodeReader.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -580,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE04BBC3467C0A21615EE4E34708538D /* MobilliumQRCodeReader.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -600,6 +623,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

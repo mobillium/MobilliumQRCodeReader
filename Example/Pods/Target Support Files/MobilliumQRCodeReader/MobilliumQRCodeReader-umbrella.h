@@ -13,4 +13,3 @@
 
 FOUNDATION_EXPORT double MobilliumQRCodeReaderVersionNumber;
 FOUNDATION_EXPORT const unsigned char MobilliumQRCodeReaderVersionString[];
-
