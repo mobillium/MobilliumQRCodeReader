@@ -1,0 +1,6 @@
+framework module MobilliumQRCodeReader {
+  umbrella header "MobilliumQRCodeReader-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,16 @@
+PODS:
+  - MobilliumQRCodeReader (0.1.0)
+
+DEPENDENCIES:
+  - MobilliumQRCodeReader (from `../`)
+
+EXTERNAL SOURCES:
+  MobilliumQRCodeReader:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MobilliumQRCodeReader: 9f12eb7a09469d8ae5c29c3da9cc5e4e55b87676
+
+PODFILE CHECKSUM: 4759361f35432394d4282eca11eb28fafdd1f2da
+
+COCOAPODS: 1.11.3
