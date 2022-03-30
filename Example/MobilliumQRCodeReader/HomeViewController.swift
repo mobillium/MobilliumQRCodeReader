@@ -75,14 +75,51 @@ extension HomeViewController {
     
     @objc
     private func readQRCodeButtonTapped() {
-        let viewController = QRCodeReaderViewController()
+        let dataModel = QRCodeReaderDataModel(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
+                                              closeButtonImage: ImageProvider.getCloseImage(),
+                                              closeButtonTintColor: .white,
+                                              isShowsCloseButton: true,
+                                              infoText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                              infoTextColor: .white,
+                                              infoTextFont: .systemFont(ofSize: 14),
+                                              galleryButtonTitle: "Choose from Gallery",
+                                              galleryButtonTitleColor: .systemBlue,
+                                              galleryButtonFont: .systemFont(ofSize: 14, weight: .semibold),
+                                              galleryButtonBackgroundColor: .white,
+                                              galleryButtonCornerRadius: 8,
+                                              isShowsGalleryButton: true,
+                                              lineWidth: 4,
+                                              lineColor: .white,
+                                              marginSize: 32,
+                                              cornerRadiuesSize: 24,
+                                              lineDashPattern: [25, 10])
+        let viewController = QRCodeReaderViewController(qrCodeReaderDataModel: dataModel)
         viewController.modalTransitionStyle = .coverVertical
         viewController.modalPresentationStyle = .fullScreen
+        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
-        viewController.getQrCodeClosure = { [weak self] text in
-            DispatchQueue.main.async {
-                self?.outputLabel.text = text
-            }
-        }
+    }
+}
+
+extension HomeViewController: QRCodeReaderDelegate {
+    
+    func qrCodeReadSuccessful(qrCode: String?) {
+        outputLabel.text = qrCode
+    }
+    
+    func qrCodeReaderFailed() {
+        let alertController = UIAlertController(title: "Scanning not supported",
+                                                message: "Your device does not support scanning a code from an item. Please use a device with a camera.",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
+    }
+    
+    func qrCodeNotFoundFromImageRead() {
+        let alertController = UIAlertController(title: "Error",
+                                                message: "QR code not found from image which you have selected from gallery",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
     }
 }

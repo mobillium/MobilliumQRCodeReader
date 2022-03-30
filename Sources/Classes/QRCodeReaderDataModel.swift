@@ -19,6 +19,8 @@ public struct QRCodeReaderDataModel {
     let galleryButtonCornerRadius: CGFloat
     let isShowsGalleryButton: Bool
     let infoText: String?
+    let infoTextColor: UIColor
+    let infoTextFont: UIFont
     let lineWidth: CGFloat
     let lineColor: UIColor
     let marginSize: CGFloat
@@ -30,6 +32,8 @@ public struct QRCodeReaderDataModel {
                 closeButtonTintColor: UIColor = .white,
                 isShowsCloseButton: Bool = true,
                 infoText: String? = nil,
+                infoTextColor: UIColor = .white,
+                infoTextFont: UIFont = .systemFont(ofSize: 14),
                 galleryButtonTitle: String? = "Choose from Gallery",
                 galleryButtonTitleColor: UIColor = .systemBlue,
                 galleryButtonFont: UIFont = .systemFont(ofSize: 14, weight: .semibold),
@@ -46,6 +50,8 @@ public struct QRCodeReaderDataModel {
         self.closeButtonTintColor = closeButtonTintColor
         self.isShowsCloseButton = isShowsCloseButton
         self.infoText = infoText
+        self.infoTextColor = infoTextColor
+        self.infoTextFont = infoTextFont
         self.galleryButtonTitle = galleryButtonTitle
         self.galleryButtonTitleColor = galleryButtonTitleColor
         self.galleryButtonFont = galleryButtonFont

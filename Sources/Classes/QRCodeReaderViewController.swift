@@ -8,6 +8,12 @@
 import AVFoundation
 import UIKit
 
+public protocol QRCodeReaderDelegate: AnyObject {
+    func qrCodeReadSuccessful(qrCode: String?)
+    func qrCodeReaderFailed()
+    func qrCodeNotFoundFromImageRead()
+}
+
 public class QRCodeReaderViewController: UIViewController {
     
     private let closeButton: UIButton = {
@@ -36,9 +42,6 @@ public class QRCodeReaderViewController: UIViewController {
     private var captureSession: AVCaptureSession!
     private var previewLayer: QRCodeReaderPreviewLayer!
     
-    public var getQrCodeClosure: ((String) -> Void)?
-    private var readQRCodeFromImageDidSuccess: (() -> Void)?
-    
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
@@ -46,7 +49,11 @@ public class QRCodeReaderViewController: UIViewController {
     private let imagePicker = UIImagePickerController()
     
     private let qrCodeReaderDataModel: QRCodeReaderDataModel
-    private let margin: CGFloat = 16
+    private let sMargin: CGFloat = 8
+    private let mMargin: CGFloat = 16
+    private let lMargin: CGFloat = 32
+    
+    public weak var delegate: QRCodeReaderDelegate?
     
     public init(nibName nibNameOrNil: String? = nil,
                 bundle nibBundleOrNil: Bundle? = nil,
@@ -63,7 +70,6 @@ public class QRCodeReaderViewController: UIViewController {
         super.viewDidLoad()
         addSubviews()
         configureContents()
-        setLocalize()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -91,19 +97,19 @@ extension QRCodeReaderViewController {
     
     private func addSubviews() {
         view.addSubview(closeButton)
-        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: margin / 2).isActive = true
-        closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin / 2).isActive = true
+        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: sMargin).isActive = true
+        closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sMargin).isActive = true
         closeButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
         
         view.addSubview(infoLabel)
-        infoLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: margin / 2).isActive = true
-        infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin).isActive = true
-        infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin).isActive = true
+        infoLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: sMargin).isActive = true
+        infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: lMargin).isActive = true
+        infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -lMargin).isActive = true
         
         view.addSubview(galleryButton)
         galleryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -margin).isActive = true
+        galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -mMargin).isActive = true
         galleryButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
     }
 }
@@ -112,13 +118,10 @@ extension QRCodeReaderViewController {
 extension QRCodeReaderViewController {
     
     private func configureContents() {
-        view.backgroundColor = .white
         configureCloseButton()
+        configureInfoLabel()
         configureGalleryButton()
         configureQRCodeReader()
-        readQRCodeFromImageDidSuccess = { [weak self] in
-            self?.dismiss(animated: true)
-        }
     }
     
     private func configureCloseButton() {
@@ -126,6 +129,12 @@ extension QRCodeReaderViewController {
         closeButton.tintColor = qrCodeReaderDataModel.closeButtonTintColor
         closeButton.isHidden = !qrCodeReaderDataModel.isShowsCloseButton
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureInfoLabel() {
+        infoLabel.text = qrCodeReaderDataModel.infoText
+        infoLabel.textColor = qrCodeReaderDataModel.infoTextColor
+        infoLabel.font = qrCodeReaderDataModel.infoTextFont
     }
     
     private func configureGalleryButton() {
@@ -136,10 +145,6 @@ extension QRCodeReaderViewController {
         galleryButton.titleLabel?.font = qrCodeReaderDataModel.galleryButtonFont
         galleryButton.isHidden = !qrCodeReaderDataModel.isShowsGalleryButton
         galleryButton.addTarget(self, action: #selector(chooseFromGalleryButtonTapped), for: .touchUpInside)
-    }
-    
-    private func setLocalize() {
-        infoLabel.text = qrCodeReaderDataModel.infoText
     }
     
     private func configureQRCodeReader() {
@@ -156,18 +161,23 @@ extension QRCodeReaderViewController {
         if captureSession.canAddInput(videoInput) {
             captureSession.addInput(videoInput)
         } else {
-            failed()
+            captureSession = nil
+            dismiss(animated: true, completion: { [weak self] in
+                self?.delegate?.qrCodeReaderFailed()
+            })
             return
         }
         
         let metadataOutput = AVCaptureMetadataOutput()
-        
         if captureSession.canAddOutput(metadataOutput) {
             captureSession.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = [.qr]
         } else {
-            failed()
+            captureSession = nil
+            dismiss(animated: true, completion: { [weak self] in
+                self?.delegate?.qrCodeReaderFailed()
+            })
             return
         }
         
@@ -186,16 +196,6 @@ extension QRCodeReaderViewController {
         view.bringSubviewToFront(infoLabel)
         view.bringSubviewToFront(galleryButton)
     }
-    
-    private func failed() {
-        let alertController = UIAlertController(title: "Scanning not supported",
-                                                message: "Your device does not support scanning a code from an item. Please use a device with a camera.",
-                                                preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
-        captureSession = nil
-    }
-    
 }
 
 // MARK: - Actions
@@ -221,8 +221,8 @@ extension QRCodeReaderViewController {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-                if !granted {
-                    self?.showOpenSettingsAlert() }
+                guard let self = self, !granted else { return }
+                self.showOpenSettingsAlert()
             }
         case .denied, .restricted:
             showOpenSettingsAlert()
@@ -258,9 +258,9 @@ extension QRCodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
         if let metadataObject = metadataObjects.first {
             if metadataObject.type == .qr {
                 let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject
-                guard let stringValue = readableObject?.stringValue else { return }
+                guard let qrCodeString = readableObject?.stringValue else { return }
                 AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-                getQrCodeClosure?(stringValue)
+                delegate?.qrCodeReadSuccessful(qrCode: qrCodeString)
             }
         }
         dismiss(animated: true)
@@ -282,17 +282,20 @@ extension QRCodeReaderViewController: UIImagePickerControllerDelegate, UINavigat
                 }
                 
                 if qrCodeString == "" {
-                    print("Qr didnt find")
+                    imagePicker.dismiss(animated: true, completion: { [weak self] in
+                        self?.dismiss(animated: true, completion: {
+                            self?.delegate?.qrCodeNotFoundFromImageRead()
+                        })
+                    })
                 } else {
-                    print("message: \(qrCodeString)")
-                    getQrCodeClosure?(qrCodeString)
+                    delegate?.qrCodeReadSuccessful(qrCode: qrCodeString)
                 }
             }
         } else {
-            print("Something went wrong")
+            delegate?.qrCodeReaderFailed()
         }
-        dismiss(animated: true, completion: { [weak self] in
-            self?.readQRCodeFromImageDidSuccess?()
+        imagePicker.dismiss(animated: true, completion: { [weak self] in
+            self?.dismiss(animated: true)
         })
     }
 }
