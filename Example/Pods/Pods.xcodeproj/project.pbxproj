@@ -13,6 +13,10 @@
 		32025AC742B7C438EB0017DEBEE781B8 /* Pods-MobilliumQRCodeReader_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 54B4119D1EA97CB94E88BABBA40EE501 /* Pods-MobilliumQRCodeReader_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56BBCEADFDCEF6ACEDE2CE1BEB780E1B /* MobilliumQRCodeReader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 59C50BC726B1911C443CDF9A1378D1F2 /* MobilliumQRCodeReader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58E4366F23BBADB167E7F4DE26D13BF1 /* Pods-MobilliumQRCodeReader_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE5D786B52D306D72ACFD69E1BA24BC /* Pods-MobilliumQRCodeReader_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A224A30027F59A4200E47FA2 /* CloseButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224A2FF27F59A4200E47FA2 /* CloseButtonModel.swift */; };
+		A224A30227F59AD600E47FA2 /* GalleryButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224A30127F59AD600E47FA2 /* GalleryButtonModel.swift */; };
+		A224A30427F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224A30327F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift */; };
+		A224A30627F59D5800E47FA2 /* InfoTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224A30527F59D5800E47FA2 /* InfoTextModel.swift */; };
 		A288E46F27F4679B0038E3F4 /* QRCodeReaderDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288E46E27F4679B0038E3F4 /* QRCodeReaderDataModel.swift */; };
 		A288E47127F468390038E3F4 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288E47027F468390038E3F4 /* QRCodeReaderViewController.swift */; };
 		A288E47327F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288E47227F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift */; };
@@ -62,6 +66,10 @@
 		96F9DC3193269D5F223A4254CE35F9C3 /* Pods-MobilliumQRCodeReader_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MobilliumQRCodeReader_Example-Info.plist"; sourceTree = "<group>"; };
 		9C27DE4AA2FCE8C2250FA7556EB41C3B /* Pods_MobilliumQRCodeReader_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobilliumQRCodeReader_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A224A2FF27F59A4200E47FA2 /* CloseButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonModel.swift; sourceTree = "<group>"; };
+		A224A30127F59AD600E47FA2 /* GalleryButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryButtonModel.swift; sourceTree = "<group>"; };
+		A224A30327F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeReaderPreviewLayerModel.swift; sourceTree = "<group>"; };
+		A224A30527F59D5800E47FA2 /* InfoTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTextModel.swift; sourceTree = "<group>"; };
 		A288E46E27F4679B0038E3F4 /* QRCodeReaderDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderDataModel.swift; sourceTree = "<group>"; };
 		A288E47027F468390038E3F4 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
 		A288E47227F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderPreviewLayer.swift; sourceTree = "<group>"; };
@@ -154,6 +162,18 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
+		A224A2FE27F59A1100E47FA2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A288E46E27F4679B0038E3F4 /* QRCodeReaderDataModel.swift */,
+				A224A2FF27F59A4200E47FA2 /* CloseButtonModel.swift */,
+				A224A30527F59D5800E47FA2 /* InfoTextModel.swift */,
+				A224A30127F59AD600E47FA2 /* GalleryButtonModel.swift */,
+				A224A30327F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A2C4F68827F450C300227D63 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +188,7 @@
 			children = (
 				A288E47027F468390038E3F4 /* QRCodeReaderViewController.swift */,
 				A288E47227F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift */,
-				A288E46E27F4679B0038E3F4 /* QRCodeReaderDataModel.swift */,
+				A224A2FE27F59A1100E47FA2 /* Model */,
 				A288E47627F484F40038E3F4 /* ImageProvider.swift */,
 			);
 			path = Classes;
@@ -411,9 +431,13 @@
 			files = (
 				A288E47727F484F40038E3F4 /* ImageProvider.swift in Sources */,
 				A288E47127F468390038E3F4 /* QRCodeReaderViewController.swift in Sources */,
+				A224A30027F59A4200E47FA2 /* CloseButtonModel.swift in Sources */,
 				A288E47327F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift in Sources */,
+				A224A30227F59AD600E47FA2 /* GalleryButtonModel.swift in Sources */,
+				A224A30627F59D5800E47FA2 /* InfoTextModel.swift in Sources */,
 				A288E46F27F4679B0038E3F4 /* QRCodeReaderDataModel.swift in Sources */,
 				2E17EF294E91F3A70744A56A1D3DCFD8 /* MobilliumQRCodeReader-dummy.m in Sources */,
+				A224A30427F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

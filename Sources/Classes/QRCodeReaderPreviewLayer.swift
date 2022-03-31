@@ -14,7 +14,7 @@ public class QRCodeReaderPreviewLayer: AVCaptureVideoPreviewLayer {
     private let lineColor: UIColor
     private let lineDashPattern: [NSNumber]?
     private let marginSize: CGFloat
-    private let cornerRadiuesSize: CGFloat
+    private let cornerRadiusSize: CGFloat
     
     public var rectOfInterest: CGRect {
         metadataOutputRectConverted(fromLayerRect: maskContainer)
@@ -39,12 +39,12 @@ public class QRCodeReaderPreviewLayer: AVCaptureVideoPreviewLayer {
                 lineWidth: CGFloat,
                 lineColor: UIColor,
                 lineDashPattern: [NSNumber]?,
-                cornerRadiuesSize: CGFloat) {
+                cornerRadiusSize: CGFloat) {
         self.marginSize = marginSize
         self.lineWidth = lineWidth
         self.lineColor = lineColor
         self.lineDashPattern = lineDashPattern
-        self.cornerRadiuesSize = cornerRadiuesSize
+        self.cornerRadiusSize = cornerRadiusSize
         super.init(session: session)
     }
     
@@ -59,7 +59,7 @@ public class QRCodeReaderPreviewLayer: AVCaptureVideoPreviewLayer {
         // MARK: - Background Mask
         let path = CGMutablePath()
         path.addRect(bounds)
-        path.addRoundedRect(in: maskContainer, cornerWidth: cornerRadiuesSize, cornerHeight: cornerRadiuesSize)
+        path.addRoundedRect(in: maskContainer, cornerWidth: cornerRadiusSize, cornerHeight: cornerRadiusSize)
         
         let maskLayer = CAShapeLayer()
         maskLayer.path = path
@@ -69,7 +69,7 @@ public class QRCodeReaderPreviewLayer: AVCaptureVideoPreviewLayer {
         
         // MARK: - Line Frame Mask
         let linePath = CGMutablePath()
-        linePath.addRoundedRect(in: maskContainer, cornerWidth: cornerRadiuesSize, cornerHeight: cornerRadiuesSize)
+        linePath.addRoundedRect(in: maskContainer, cornerWidth: cornerRadiusSize, cornerHeight: cornerRadiusSize)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = linePath

@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
         button.contentEdgeInsets = .init(top: 8, left: 16, bottom: 8, right: 16)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -75,24 +75,33 @@ extension HomeViewController {
     
     @objc
     private func readQRCodeButtonTapped() {
-        let dataModel = QRCodeReaderDataModel(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
-                                              closeButtonImage: ImageProvider.getCloseImage(),
-                                              closeButtonTintColor: .white,
-                                              isShowsCloseButton: true,
-                                              infoText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                                              infoTextColor: .white,
-                                              infoTextFont: .systemFont(ofSize: 14),
-                                              galleryButtonTitle: "Choose from Gallery",
-                                              galleryButtonTitleColor: .systemBlue,
-                                              galleryButtonFont: .systemFont(ofSize: 14, weight: .semibold),
-                                              galleryButtonBackgroundColor: .white,
-                                              galleryButtonCornerRadius: 8,
-                                              isShowsGalleryButton: true,
-                                              lineWidth: 4,
-                                              lineColor: .white,
-                                              marginSize: 32,
-                                              cornerRadiuesSize: 24,
-                                              lineDashPattern: [25, 10])
+        let closeButtonModel = CloseButtonModel(image: ImageProvider.getCloseImage(),
+                                                tintColor: .white,
+                                                isHidden: false)
+        
+        let infoTextModel = InfoTextModel(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                          textColor: .white,
+                                          font: .systemFont(ofSize: 14),
+                                          isHidden: false)
+        
+        let galleryButtonModel = GalleryButtonModel(title: "Choose from Gallery",
+                                                    titleColor: .systemBlue,
+                                                    font: .systemFont(ofSize: 14, weight: .semibold),
+                                                    backgroundColor: .white,
+                                                    cornerRadius: 8,
+                                                    isHidden: false)
+        
+        let qrCodeReaderPreviewLayerModel = QRCodeReaderPreviewLayerModel(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
+                                                                          lineWidth: 4,
+                                                                          lineColor: .white,
+                                                                          marginSize: 32,
+                                                                          cornerRadius: 24,
+                                                                          lineDashPattern: [25, 10])
+        
+        let dataModel = QRCodeReaderDataModel(closeButtonModel: closeButtonModel,
+                                              infoTextModel: infoTextModel,
+                                              galleryButtonModel: galleryButtonModel,
+                                              qrCodeReaderPreviewLayerModel: qrCodeReaderPreviewLayerModel)
         let viewController = QRCodeReaderViewController(qrCodeReaderDataModel: dataModel)
         viewController.modalTransitionStyle = .coverVertical
         viewController.modalPresentationStyle = .fullScreen
@@ -103,21 +112,13 @@ extension HomeViewController {
 
 extension HomeViewController: QRCodeReaderDelegate {
     
-    func qrCodeReadSuccessful(qrCode: String?) {
+    func qrCodeReader(_ viewController: UIViewController, didSuccess qrCode: String) {
         outputLabel.text = qrCode
     }
     
-    func qrCodeReaderFailed() {
+    func qrCodeReaderFailed(_ viewController: UIViewController) {
         let alertController = UIAlertController(title: "Scanning not supported",
                                                 message: "Your device does not support scanning a code from an item. Please use a device with a camera.",
-                                                preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
-    }
-    
-    func qrCodeNotFoundFromImageRead() {
-        let alertController = UIAlertController(title: "Error",
-                                                message: "QR code not found from image which you have selected from gallery",
                                                 preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
