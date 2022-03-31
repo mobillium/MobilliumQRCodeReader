@@ -234,17 +234,17 @@ extension QRCodeReaderViewController {
     }
     
     private func showOpenSettingsAlert() {
-        let alertController = UIAlertController (title: nil, message: "Go to Settings?", preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+        let alertController = UIAlertController (title: nil, message: qrCodeReaderDataModel.settingsAlertDataModel.message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlertDataModel.actionButtonTitle, style: .default) { _ in
             
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)")
+                    print(success)
                 })
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlertDataModel.cancelButtonTitle, style: .default, handler: nil)
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)
         

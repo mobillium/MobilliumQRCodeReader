@@ -22,6 +22,7 @@
 		A288E47327F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288E47227F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift */; };
 		A288E47527F484370038E3F4 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A288E47427F484370038E3F4 /* Icons.xcassets */; };
 		A288E47727F484F40038E3F4 /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288E47627F484F40038E3F4 /* ImageProvider.swift */; };
+		A2F4E93627F5B9A0007DDD1D /* SettingsAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4E93527F5B9A0007DDD1D /* SettingsAlertDataModel.swift */; };
 		E287F5BF5C0CE855E84A0CD107C4A971 /* Pods-MobilliumQRCodeReader_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5983AA299B8BC8A8397E5C377FAF0C02 /* Pods-MobilliumQRCodeReader_Example-dummy.m */; };
 		E4C815C51AC7B621D3723C52650C8812 /* Pods-MobilliumQRCodeReader_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 013E7E052739BEBAA81F7631955A8B80 /* Pods-MobilliumQRCodeReader_Tests-dummy.m */; };
 		E896E723AA1C65E3051BAB0C26CAAFF4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
@@ -75,6 +76,7 @@
 		A288E47227F4683F0038E3F4 /* QRCodeReaderPreviewLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderPreviewLayer.swift; sourceTree = "<group>"; };
 		A288E47427F484370038E3F4 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		A288E47627F484F40038E3F4 /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
+		A2F4E93527F5B9A0007DDD1D /* SettingsAlertDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAlertDataModel.swift; sourceTree = "<group>"; };
 		B3D68B99F97DC01D3A729467F7B570ED /* Pods-MobilliumQRCodeReader_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MobilliumQRCodeReader_Example.release.xcconfig"; sourceTree = "<group>"; };
 		B6C95008A0066429399D2FB457B26CAB /* Pods-MobilliumQRCodeReader_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MobilliumQRCodeReader_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		BACDC44DF474DF52C3214DD5863B8C03 /* MobilliumQRCodeReader-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MobilliumQRCodeReader-dummy.m"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				A224A30527F59D5800E47FA2 /* InfoTextModel.swift */,
 				A224A30127F59AD600E47FA2 /* GalleryButtonModel.swift */,
 				A224A30327F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift */,
+				A2F4E93527F5B9A0007DDD1D /* SettingsAlertDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				A224A30227F59AD600E47FA2 /* GalleryButtonModel.swift in Sources */,
 				A224A30627F59D5800E47FA2 /* InfoTextModel.swift in Sources */,
 				A288E46F27F4679B0038E3F4 /* QRCodeReaderDataModel.swift in Sources */,
+				A2F4E93627F5B9A0007DDD1D /* SettingsAlertDataModel.swift in Sources */,
 				2E17EF294E91F3A70744A56A1D3DCFD8 /* MobilliumQRCodeReader-dummy.m in Sources */,
 				A224A30427F59B7E00E47FA2 /* QRCodeReaderPreviewLayerModel.swift in Sources */,
 			);

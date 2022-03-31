@@ -98,10 +98,16 @@ extension HomeViewController {
                                                                           cornerRadius: 24,
                                                                           lineDashPattern: [25, 10])
         
+        let settingsAlertDataModel = SettingsAlertDataModel(title: nil,
+                                                            message: "Go to Settings?",
+                                                            actionButtonTitle: "Settings",
+                                                            cancelButtonTitle: "Cancel")
+        
         let dataModel = QRCodeReaderDataModel(closeButtonModel: closeButtonModel,
                                               infoTextModel: infoTextModel,
                                               galleryButtonModel: galleryButtonModel,
-                                              qrCodeReaderPreviewLayerModel: qrCodeReaderPreviewLayerModel)
+                                              qrCodeReaderPreviewLayerModel: qrCodeReaderPreviewLayerModel,
+                                              settingsAlertDataModel: settingsAlertDataModel)
         let viewController = QRCodeReaderViewController(qrCodeReaderDataModel: dataModel)
         viewController.modalTransitionStyle = .coverVertical
         viewController.modalPresentationStyle = .fullScreen
