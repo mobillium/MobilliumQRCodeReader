@@ -40,6 +40,7 @@ public class QRCodeReaderViewController: UIViewController {
     
     private var captureSession: AVCaptureSession!
     private var previewLayer: QRCodeReaderPreviewLayer!
+    private let metadataOutput = AVCaptureMetadataOutput()
     
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
@@ -167,7 +168,6 @@ extension QRCodeReaderViewController {
             return
         }
         
-        let metadataOutput = AVCaptureMetadataOutput()
         if captureSession.canAddOutput(metadataOutput) {
             captureSession.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
@@ -195,6 +195,13 @@ extension QRCodeReaderViewController {
         view.bringSubviewToFront(closeButton)
         view.bringSubviewToFront(infoLabel)
         view.bringSubviewToFront(galleryButton)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
+            self.metadataOutput.rectOfInterest = self.previewLayer.rectOfInterest
+        }
     }
 }
 
