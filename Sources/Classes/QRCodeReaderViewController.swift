@@ -222,7 +222,9 @@ extension QRCodeReaderViewController {
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
                 guard let self = self, !granted else { return }
-                self.showOpenSettingsAlert()
+                DispatchQueue.main.async {
+                    self.showOpenSettingsAlert()
+                }
             }
         case .denied, .restricted:
             showOpenSettingsAlert()
