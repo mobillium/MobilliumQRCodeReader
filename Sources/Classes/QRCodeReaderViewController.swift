@@ -54,9 +54,7 @@ public class QRCodeReaderViewController: UIViewController {
     
     public weak var delegate: QRCodeReaderDelegate?
     
-    public init(nibName nibNameOrNil: String? = nil,
-                bundle nibBundleOrNil: Bundle? = nil,
-                qrCodeReaderDataModel: QRCodeReaderDataModel = QRCodeReaderDataModel()) {
+    public init(qrCodeReaderDataModel: QRCodeReaderDataModel = QRCodeReaderDataModel()) {
         self.qrCodeReaderDataModel = qrCodeReaderDataModel
         super.init(nibName: nil, bundle: nil)
     }
