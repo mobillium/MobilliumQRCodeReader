@@ -128,6 +128,6 @@ extension HomeViewController: QRCodeReaderDelegate {
                                                 message: "An unexpected error occurred",
                                                 preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
+        viewController.present(alertController, animated: true)
     }
 }

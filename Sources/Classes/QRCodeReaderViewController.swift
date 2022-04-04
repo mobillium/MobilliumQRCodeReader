@@ -161,10 +161,7 @@ extension QRCodeReaderViewController {
             captureSession.addInput(videoInput)
         } else {
             captureSession = nil
-            dismiss(animated: true, completion: { [weak self] in
-                guard let self = self else { return }
-                self.delegate?.qrCodeReaderFailed(self)
-            })
+            delegate?.qrCodeReaderFailed(self)
             return
         }
         
@@ -174,10 +171,7 @@ extension QRCodeReaderViewController {
             metadataOutput.metadataObjectTypes = [.qr]
         } else {
             captureSession = nil
-            dismiss(animated: true, completion: { [weak self] in
-                guard let self = self else { return }
-                self.delegate?.qrCodeReaderFailed(self)
-            })
+            delegate?.qrCodeReaderFailed(self)
             return
         }
         
@@ -293,19 +287,21 @@ extension QRCodeReaderViewController: UIImagePickerControllerDelegate, UINavigat
                 if qrCodeString == "" {
                     imagePicker.dismiss(animated: true, completion: { [weak self] in
                         guard let self = self else { return }
-                        self.dismiss(animated: true, completion: {
-                            self.delegate?.qrCodeReaderFailed(self)
-                        })
+                        self.delegate?.qrCodeReaderFailed(self)
                     })
                 } else {
-                    delegate?.qrCodeReader(self, didSuccess: qrCodeString)
+                    imagePicker.dismiss(animated: true, completion: { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.qrCodeReader(self, didSuccess: qrCodeString)
+                        self.dismiss(animated: true)
+                    })
                 }
             }
         } else {
-            delegate?.qrCodeReaderFailed(self)
+            imagePicker.dismiss(animated: true, completion: { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.qrCodeReaderFailed(self)
+            })
         }
-        imagePicker.dismiss(animated: true, completion: { [weak self] in
-            self?.dismiss(animated: true)
-        })
     }
 }
