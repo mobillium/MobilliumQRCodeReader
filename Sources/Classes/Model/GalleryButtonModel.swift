@@ -12,18 +12,21 @@ public struct GalleryButtonModel {
     public let backgroundColor: UIColor
     public let cornerRadius: CGFloat
     public let isHidden: Bool
+    public let height: CGFloat
     
     public init(title: String? = "Choose from Gallery",
                 titleColor: UIColor = .systemBlue,
                 font: UIFont = .systemFont(ofSize: 14, weight: .semibold),
                 backgroundColor: UIColor = .white,
                 cornerRadius: CGFloat = 8,
-                isHidden: Bool = false) {
+                isHidden: Bool = false,
+                height: CGFloat = 32) {
         self.title = title
         self.titleColor = titleColor
         self.font = font
         self.backgroundColor = backgroundColor
         self.cornerRadius = cornerRadius
         self.isHidden = isHidden
+        self.height = height
     }
 }

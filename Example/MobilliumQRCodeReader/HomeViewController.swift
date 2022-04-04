@@ -89,7 +89,8 @@ extension HomeViewController {
                                                     font: .systemFont(ofSize: 14, weight: .semibold),
                                                     backgroundColor: .white,
                                                     cornerRadius: 8,
-                                                    isHidden: false)
+                                                    isHidden: false,
+                                                    height: 32)
         
         let qrCodeReaderPreviewLayerModel = QRCodeReaderPreviewLayerModel(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
                                                                           lineWidth: 4,

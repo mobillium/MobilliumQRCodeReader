@@ -108,7 +108,7 @@ extension QRCodeReaderViewController {
         view.addSubview(galleryButton)
         galleryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -mMargin).isActive = true
-        galleryButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        galleryButton.heightAnchor.constraint(equalToConstant: qrCodeReaderDataModel.galleryButtonModel.height).isActive = true
     }
 }
 
