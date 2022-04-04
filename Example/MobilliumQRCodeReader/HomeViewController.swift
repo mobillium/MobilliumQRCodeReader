@@ -124,8 +124,8 @@ extension HomeViewController: QRCodeReaderDelegate {
     }
     
     func qrCodeReaderFailed(_ viewController: UIViewController) {
-        let alertController = UIAlertController(title: "Scanning not supported",
-                                                message: "Your device does not support scanning a code from an item. Please use a device with a camera.",
+        let alertController = UIAlertController(title: "Error",
+                                                message: "An unexpected error occurred",
                                                 preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
