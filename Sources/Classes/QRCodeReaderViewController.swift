@@ -41,19 +41,19 @@ public class QRCodeReaderViewController: UIViewController {
     private var captureSession: AVCaptureSession!
     private var previewLayer: QRCodeReaderPreviewLayer!
     private let metadataOutput = AVCaptureMetadataOutput()
-    
-    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
-    private let imagePicker = UIImagePickerController()
-    
     private let qrCodeReaderDataModel: QRCodeReaderDataModel
+
     private let sMargin: CGFloat = 8
     private let mMargin: CGFloat = 16
     private let lMargin: CGFloat = 32
     
+    private let imagePicker = UIImagePickerController()
+    
     public weak var delegate: QRCodeReaderDelegate?
+    
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     public init(qrCodeReaderDataModel: QRCodeReaderDataModel = QRCodeReaderDataModel()) {
         self.qrCodeReaderDataModel = qrCodeReaderDataModel
@@ -143,7 +143,7 @@ extension QRCodeReaderViewController {
         galleryButton.layer.cornerRadius = qrCodeReaderDataModel.galleryButtonModel.cornerRadius
         galleryButton.titleLabel?.font = qrCodeReaderDataModel.galleryButtonModel.font
         galleryButton.isHidden = qrCodeReaderDataModel.galleryButtonModel.isHidden
-        galleryButton.addTarget(self, action: #selector(chooseFromGalleryButtonTapped), for: .touchUpInside)
+        galleryButton.addTarget(self, action: #selector(galleryButtonTapped), for: .touchUpInside)
     }
     
     private func configureQRCodeReader() {
@@ -190,6 +190,7 @@ extension QRCodeReaderViewController {
         view.bringSubviewToFront(infoLabel)
         view.bringSubviewToFront(galleryButton)
         
+        /// Captures only inside of reader square
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.layoutIfNeeded()
@@ -208,7 +209,7 @@ extension QRCodeReaderViewController {
     }
     
     @objc
-    private func chooseFromGalleryButtonTapped() {
+    private func galleryButtonTapped() {
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
