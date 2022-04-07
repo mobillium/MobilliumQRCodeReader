@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'MobilliumQRCodeReader'
   s.version          = '1.0.0'
-  s.summary          = 'A short description of MobilliumQRCodeReader.'
+  s.summary          = 'Simple way to read QR Code by camera and from gallery'
 
   s.description      = <<-DESC
   MobilliumQRCodeReader is a customisable qr code reader also you can read qr code from gallery image.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/mrtcelebi/MobilliumQRCodeReader'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'mrtcelebi' => 'mrttcelebi@gmail.com' }
-  s.source           = { :git => 'https://github.com/mrtcelebi/MobilliumQRCodeReader.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/mobillium/MobilliumQRCodeReader.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/_mrtcelebi_'
 
   s.ios.deployment_target = '11.0'

@@ -130,4 +130,8 @@ extension HomeViewController: QRCodeReaderDelegate {
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         viewController.present(alertController, animated: true)
     }
+    
+    func qrCodeReaderDismiss(_ viewController: UIViewController) {
+        viewController.dismiss(animated: true)
+    }
 }

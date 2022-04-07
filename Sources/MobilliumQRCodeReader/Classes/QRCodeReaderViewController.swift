@@ -11,6 +11,7 @@ import UIKit
 public protocol QRCodeReaderDelegate: AnyObject {
     func qrCodeReader(_ viewController: UIViewController, didSuccess qrCode: String)
     func qrCodeReaderFailed(_ viewController: UIViewController)
+    func qrCodeReaderDismiss(_ viewController: UIViewController)
 }
 
 public class QRCodeReaderViewController: UIViewController {
@@ -205,7 +206,7 @@ extension QRCodeReaderViewController {
     
     @objc
     private func closeButtonTapped() {
-        dismiss(animated: true)
+        delegate?.qrCodeReaderDismiss(self)
     }
     
     @objc
@@ -259,15 +260,14 @@ extension QRCodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
     
     public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         captureSession.stopRunning()
-        if let metadataObject = metadataObjects.first {
-            if metadataObject.type == .qr {
-                let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject
-                guard let qrCodeString = readableObject?.stringValue else { return }
-                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-                delegate?.qrCodeReader(self, didSuccess: qrCodeString)
-            }
+        if let metadataObject = metadataObjects.first,
+           metadataObject.type == .qr {
+            let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject
+            guard let qrCodeString = readableObject?.stringValue else { return }
+            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+            delegate?.qrCodeReader(self, didSuccess: qrCodeString)
         }
-        dismiss(animated: true)
+        delegate?.qrCodeReaderDismiss(self)
     }
 }
 
@@ -285,7 +285,7 @@ extension QRCodeReaderViewController: UIImagePickerControllerDelegate, UINavigat
                     qrCodeString += feature.messageString!
                 }
                 
-                if qrCodeString == "" {
+                if qrCodeString.isEmpty {
                     imagePicker.dismiss(animated: true, completion: { [weak self] in
                         guard let self = self else { return }
                         self.delegate?.qrCodeReaderFailed(self)
@@ -294,7 +294,7 @@ extension QRCodeReaderViewController: UIImagePickerControllerDelegate, UINavigat
                     imagePicker.dismiss(animated: true, completion: { [weak self] in
                         guard let self = self else { return }
                         self.delegate?.qrCodeReader(self, didSuccess: qrCodeString)
-                        self.dismiss(animated: true)
+                        self.delegate?.qrCodeReaderDismiss(self)
                     })
                 }
             }
