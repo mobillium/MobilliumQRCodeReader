@@ -1,6 +1,6 @@
 # MobilliumQRCodeReader
 
-[![CI Status](https://img.shields.io/travis/mrtcelebi/MobilliumQRCodeReader.svg?style=flat)](https://travis-ci.org/mrtcelebi/MobilliumQRCodeReader)
+[![CI Status](https://img.shields.io/travis/mobillium/MobilliumQRCodeReader.svg?style=flat)](https://travis-ci.org/mobillium/MobilliumQRCodeReader)
 [![Version](https://img.shields.io/cocoapods/v/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![License](https://img.shields.io/cocoapods/l/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![Platform](https://img.shields.io/cocoapods/p/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
