@@ -11,7 +11,7 @@ jobs:
      runs-on: macos-latest
      strategy:
         matrix:
-          destination: ['platform=iOS Simulator,name=iPhone 12,OS=14.8','platform=iOS Simulator,name=iPhone 13,OS=15.4']
+          destination: ['platform=iOS Simulator,name=iPhone 13,OS=15.2']
           
 
      env:
