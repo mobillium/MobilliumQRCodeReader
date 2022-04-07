@@ -1,0 +1,40 @@
+name: MobilliumQRCodeReader CI
+  
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+     
+jobs:
+ Tests:
+     runs-on: macos-latest
+     strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,name=iPhone 11,OS=14.8','platform=iOS Simulator,name=iPhone 12,OS=15.4']
+     env:
+       XC_VERSION: ${{ '13.3' }}
+       XC_WORKSPACE: ${{ 'Example/MobilliumQRCodeReader.xcworkspace' }}
+       XC_SCHEME: ${{ 'MobilliumQRCodeReader-Example' }}
+     steps:
+     - uses: actions/checkout@v3
+     - name: Select latest Xcode
+       run: "sudo xcode-select -s /Applications/Xcode_$XC_VERSION.app"
+     - name: Install Dependencies
+       run: |
+        cd Example
+        pod install --repo-update
+     - name: Link to 14.8 Simulators
+       run: |
+         echo "Creating Runtimes folder if needed..."
+         sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+         echo "Creating symlink of the iOS 14.8 runtime..."
+         sudo ln -s /Applications/Xcode_$XC_VERSION.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 14.8.simruntime
+     - name: Link to 15.4 Simulators
+       run: |
+         echo "Creating Runtimes folder if needed..."
+         sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+         echo "Creating symlink of the iOS 15.4 runtime..."
+         sudo ln -s /Applications/Xcode_$XC_VERSION.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 15.4.simruntime
+     - name: Run Unit and UI Tests
+       run: /usr/bin/xcodebuild test -workspace "$XC_WORKSPACE" -scheme "$XC_SCHEME" -destination '${{ matrix.destination }}'
