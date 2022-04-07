@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   MobilliumQRCodeReader is a customisable qr code reader also you can read qr code from gallery image.
                        DESC
 
-  s.homepage         = 'https://github.com/mrtcelebi/MobilliumQRCodeReader'
+  s.homepage         = 'https://github.com/mobillium/MobilliumQRCodeReader'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'mrtcelebi' => 'mrttcelebi@gmail.com' }
   s.source           = { :git => 'https://github.com/mobillium/MobilliumQRCodeReader.git', :tag => s.version.to_s }
