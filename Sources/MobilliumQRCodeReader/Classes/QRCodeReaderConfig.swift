@@ -123,7 +123,7 @@ extension QRCodeReaderConfig {
     }
 }
 
-// MARK: -
+// MARK: - SettingsAlert
 extension QRCodeReaderConfig {
     
     public struct SettingsAlert {

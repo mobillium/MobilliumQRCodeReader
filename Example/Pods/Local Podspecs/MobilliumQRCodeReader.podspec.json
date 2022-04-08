@@ -1,6 +1,6 @@
 {
   "name": "MobilliumQRCodeReader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "summary": "Simple way to read QR Code by camera and from gallery",
   "description": "MobilliumQRCodeReader is a customisable qr code reader also you can read qr code from gallery image.",
   "homepage": "https://github.com/mobillium/MobilliumQRCodeReader",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/mobillium/MobilliumQRCodeReader.git",
-    "tag": "1.0.0"
+    "tag": "1.1.0"
   },
   "social_media_url": "https://twitter.com/_mrtcelebi_",
   "platforms": {

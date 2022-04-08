@@ -95,7 +95,7 @@ Advanced usage:
 ```
 
 
-Delegate funcs:
+QRCodeReaderDelegate:
 ```swift
     func qrCodeReader(_ viewController: UIViewController, didSuccess qrCode: String)
     func qrCodeReaderFailed(_ viewController: UIViewController)
