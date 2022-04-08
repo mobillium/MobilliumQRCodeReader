@@ -2,6 +2,7 @@
 
 [![Build Status](https://github.com/mobillium/MobilliumQRCodeReader/actions/workflows/ci.yml/badge.svg)](https://github.com/mobillium/MobilliumQRCodeReader/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/cocoapods/v/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
+[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
 [![License](https://img.shields.io/cocoapods/l/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![Platform](https://img.shields.io/cocoapods/p/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 
