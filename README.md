@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![Platform](https://img.shields.io/cocoapods/p/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 
+![Preview](Resources/preview.png)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
