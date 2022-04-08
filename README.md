@@ -33,7 +33,7 @@ Once you have your Swift package set up, adding MobilliumQRCodeReader as a depen
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/mobillium/MobilliumQRCodeReader.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/mobillium/MobilliumQRCodeReader.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
