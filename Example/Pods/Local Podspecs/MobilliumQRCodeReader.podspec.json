@@ -1,9 +1,9 @@
 {
   "name": "MobilliumQRCodeReader",
-  "version": "0.1.0",
-  "summary": "A short description of MobilliumQRCodeReader.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/mrtcelebi/MobilliumQRCodeReader",
+  "version": "1.0.0",
+  "summary": "Simple way to read QR Code by camera and from gallery",
+  "description": "MobilliumQRCodeReader is a customisable qr code reader also you can read qr code from gallery image.",
+  "homepage": "https://github.com/mobillium/MobilliumQRCodeReader",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,17 @@
     "mrtcelebi": "mrttcelebi@gmail.com"
   },
   "source": {
-    "git": "https://github.com/mrtcelebi/MobilliumQRCodeReader.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/mobillium/MobilliumQRCodeReader.git",
+    "tag": "1.0.0"
   },
+  "social_media_url": "https://twitter.com/_mrtcelebi_",
   "platforms": {
-    "ios": "9.0"
+    "ios": "11.0"
   },
-  "source_files": "MobilliumQRCodeReader/Classes/**/*"
+  "swift_versions": "5.0",
+  "source_files": "Sources/MobilliumQRCodeReader/Classes/**/*",
+  "resources": [
+    "Sources/MobilliumQRCodeReader/Assets/*.xcassets"
+  ],
+  "swift_version": "5.0"
 }

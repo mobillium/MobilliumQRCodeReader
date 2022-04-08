@@ -11,7 +11,12 @@ import UIKit
 public protocol QRCodeReaderDelegate: AnyObject {
     func qrCodeReader(_ viewController: UIViewController, didSuccess qrCode: String)
     func qrCodeReaderFailed(_ viewController: UIViewController)
-    func qrCodeReaderDismiss(_ viewController: UIViewController)
+    func qrCodeReaderClosed(_ viewController: UIViewController)
+}
+
+public extension QRCodeReaderDelegate {
+    func qrCodeReaderFailed(_ viewController: UIViewController) {}
+    func qrCodeReaderClosed(_ viewController: UIViewController) {}
 }
 
 public class QRCodeReaderViewController: UIViewController {
@@ -42,8 +47,8 @@ public class QRCodeReaderViewController: UIViewController {
     private var captureSession: AVCaptureSession!
     private var previewLayer: QRCodeReaderPreviewLayer!
     private let metadataOutput = AVCaptureMetadataOutput()
-    private let qrCodeReaderDataModel: QRCodeReaderDataModel
-
+    private let qrCodeReaderDataModel: QRCodeReaderConfig
+    
     private let sMargin: CGFloat = 8
     private let mMargin: CGFloat = 16
     private let lMargin: CGFloat = 32
@@ -56,7 +61,7 @@ public class QRCodeReaderViewController: UIViewController {
         return .portrait
     }
     
-    public init(qrCodeReaderDataModel: QRCodeReaderDataModel = QRCodeReaderDataModel()) {
+    public init(qrCodeReaderDataModel: QRCodeReaderConfig = QRCodeReaderConfig()) {
         self.qrCodeReaderDataModel = qrCodeReaderDataModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -89,6 +94,20 @@ public class QRCodeReaderViewController: UIViewController {
         super.viewDidAppear(animated)
         checkCameraPermission()
     }
+    
+    private func dismissWithFailed() {
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.qrCodeReaderFailed(self)
+        }
+    }
+    
+    private func dismissWithSuccess(qrCodeString: String) {
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.qrCodeReader(self, didSuccess: qrCodeString)
+        }
+    }
 }
 
 // MARK: - UILayout
@@ -109,7 +128,7 @@ extension QRCodeReaderViewController {
         view.addSubview(galleryButton)
         galleryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -mMargin).isActive = true
-        galleryButton.heightAnchor.constraint(equalToConstant: qrCodeReaderDataModel.galleryButtonModel.height).isActive = true
+        galleryButton.heightAnchor.constraint(equalToConstant: qrCodeReaderDataModel.galleryButton.height).isActive = true
     }
 }
 
@@ -124,26 +143,26 @@ extension QRCodeReaderViewController {
     }
     
     private func configureCloseButton() {
-        closeButton.setImage(qrCodeReaderDataModel.closeButtonModel.image, for: .normal)
-        closeButton.tintColor = qrCodeReaderDataModel.closeButtonModel.tintColor
-        closeButton.isHidden = qrCodeReaderDataModel.closeButtonModel.isHidden
+        closeButton.setImage(qrCodeReaderDataModel.closeButton.image, for: .normal)
+        closeButton.tintColor = qrCodeReaderDataModel.closeButton.tintColor
+        closeButton.isHidden = qrCodeReaderDataModel.closeButton.isHidden
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
     
     private func configureInfoLabel() {
-        infoLabel.text = qrCodeReaderDataModel.infoTextModel.text
-        infoLabel.textColor = qrCodeReaderDataModel.infoTextModel.textColor
-        infoLabel.font = qrCodeReaderDataModel.infoTextModel.font
-        infoLabel.isHidden = qrCodeReaderDataModel.infoTextModel.isHidden
+        infoLabel.text = qrCodeReaderDataModel.infoLabel.text
+        infoLabel.textColor = qrCodeReaderDataModel.infoLabel.textColor
+        infoLabel.font = qrCodeReaderDataModel.infoLabel.font
+        infoLabel.isHidden = qrCodeReaderDataModel.infoLabel.isHidden
     }
     
     private func configureGalleryButton() {
-        galleryButton.setTitle(qrCodeReaderDataModel.galleryButtonModel.title, for: .normal)
-        galleryButton.setTitleColor(qrCodeReaderDataModel.galleryButtonModel.titleColor, for: .normal)
-        galleryButton.backgroundColor = qrCodeReaderDataModel.galleryButtonModel.backgroundColor
-        galleryButton.layer.cornerRadius = qrCodeReaderDataModel.galleryButtonModel.cornerRadius
-        galleryButton.titleLabel?.font = qrCodeReaderDataModel.galleryButtonModel.font
-        galleryButton.isHidden = qrCodeReaderDataModel.galleryButtonModel.isHidden
+        galleryButton.setTitle(qrCodeReaderDataModel.galleryButton.title, for: .normal)
+        galleryButton.setTitleColor(qrCodeReaderDataModel.galleryButton.titleColor, for: .normal)
+        galleryButton.backgroundColor = qrCodeReaderDataModel.galleryButton.backgroundColor
+        galleryButton.layer.cornerRadius = qrCodeReaderDataModel.galleryButton.cornerRadius
+        galleryButton.titleLabel?.font = qrCodeReaderDataModel.galleryButton.font
+        galleryButton.isHidden = qrCodeReaderDataModel.galleryButton.isHidden
         galleryButton.addTarget(self, action: #selector(galleryButtonTapped), for: .touchUpInside)
     }
     
@@ -177,13 +196,13 @@ extension QRCodeReaderViewController {
         }
         
         previewLayer = QRCodeReaderPreviewLayer(session: captureSession,
-                                                marginSize: qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.marginSize,
-                                                lineWidth: qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.lineWidth,
-                                                lineColor: qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.lineColor,
-                                                lineDashPattern: qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.lineDashPattern,
-                                                cornerRadiusSize: qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.cornerRadius)
+                                                marginSize: qrCodeReaderDataModel.previewLayer.marginSize,
+                                                lineWidth: qrCodeReaderDataModel.previewLayer.lineWidth,
+                                                lineColor: qrCodeReaderDataModel.previewLayer.lineColor,
+                                                lineDashPattern: qrCodeReaderDataModel.previewLayer.lineDashPattern,
+                                                cornerRadiusSize: qrCodeReaderDataModel.previewLayer.cornerRadius)
         previewLayer.frame = view.layer.bounds
-        previewLayer.backgroundColor = qrCodeReaderDataModel.qrCodeReaderPreviewLayerModel.backgroundColor
+        previewLayer.backgroundColor = qrCodeReaderDataModel.previewLayer.backgroundColor
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
         
@@ -206,7 +225,10 @@ extension QRCodeReaderViewController {
     
     @objc
     private func closeButtonTapped() {
-        delegate?.qrCodeReaderDismiss(self)
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.qrCodeReaderClosed(self)
+        }
     }
     
     @objc
@@ -237,8 +259,8 @@ extension QRCodeReaderViewController {
     }
     
     private func showOpenSettingsAlert() {
-        let alertController = UIAlertController (title: nil, message: qrCodeReaderDataModel.settingsAlertDataModel.message, preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlertDataModel.actionButtonTitle, style: .default) { _ in
+        let alertController = UIAlertController (title: nil, message: qrCodeReaderDataModel.settingsAlert.message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlert.actionButtonTitle, style: .default) { _ in
             
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
             if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -247,7 +269,7 @@ extension QRCodeReaderViewController {
                 })
             }
         }
-        let cancelAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlertDataModel.cancelButtonTitle, style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: qrCodeReaderDataModel.settingsAlert.cancelButtonTitle, style: .default, handler: nil)
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)
         
@@ -265,9 +287,10 @@ extension QRCodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
             let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject
             guard let qrCodeString = readableObject?.stringValue else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            delegate?.qrCodeReader(self, didSuccess: qrCodeString)
+            self.dismissWithSuccess(qrCodeString: qrCodeString)
+        } else {
+            self.dismissWithFailed()
         }
-        delegate?.qrCodeReaderDismiss(self)
     }
 }
 
@@ -292,9 +315,7 @@ extension QRCodeReaderViewController: UIImagePickerControllerDelegate, UINavigat
                     })
                 } else {
                     imagePicker.dismiss(animated: true, completion: { [weak self] in
-                        guard let self = self else { return }
-                        self.delegate?.qrCodeReader(self, didSuccess: qrCodeString)
-                        self.delegate?.qrCodeReaderDismiss(self)
+                        self?.dismissWithSuccess(qrCodeString: qrCodeString)
                     })
                 }
             }

@@ -75,40 +75,40 @@ extension HomeViewController {
     
     @objc
     private func readQRCodeButtonTapped() {
-        let closeButtonModel = CloseButtonModel(image: ImageProvider.getCloseImage(),
-                                                tintColor: .white,
-                                                isHidden: false)
+        let closeButton = QRCodeReaderConfig.CloseButton(image: ImageProvider.getCloseImage(),
+                                                         tintColor: .white,
+                                                         isHidden: false)
         
-        let infoTextModel = InfoTextModel(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-                                          textColor: .white,
-                                          font: .systemFont(ofSize: 14),
-                                          isHidden: false)
+        let infoLabel = QRCodeReaderConfig.InfoLabel(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                                     textColor: .white,
+                                                     font: .systemFont(ofSize: 14),
+                                                     isHidden: false)
         
-        let galleryButtonModel = GalleryButtonModel(title: "Choose from Gallery",
-                                                    titleColor: .systemBlue,
-                                                    font: .systemFont(ofSize: 14, weight: .semibold),
-                                                    backgroundColor: .white,
-                                                    cornerRadius: 8,
-                                                    isHidden: false,
-                                                    height: 32)
+        let galleryButton = QRCodeReaderConfig.GalleryButton(title: "Choose from Gallery",
+                                                             titleColor: .systemBlue,
+                                                             font: .systemFont(ofSize: 14, weight: .semibold),
+                                                             backgroundColor: .white,
+                                                             cornerRadius: 8,
+                                                             isHidden: false,
+                                                             height: 32)
         
-        let qrCodeReaderPreviewLayerModel = QRCodeReaderPreviewLayerModel(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
-                                                                          lineWidth: 4,
-                                                                          lineColor: .white,
-                                                                          marginSize: 32,
-                                                                          cornerRadius: 24,
-                                                                          lineDashPattern: [25, 10])
+        let previewLayer = QRCodeReaderConfig.PreviewLayer(backgroundColor: UIColor.gray.withAlphaComponent(0.3).cgColor,
+                                                           lineWidth: 4,
+                                                           lineColor: .white,
+                                                           marginSize: 32,
+                                                           cornerRadius: 24,
+                                                           lineDashPattern: [25, 10])
         
-        let settingsAlertDataModel = SettingsAlertDataModel(title: nil,
-                                                            message: "Go to Settings?",
-                                                            actionButtonTitle: "Settings",
-                                                            cancelButtonTitle: "Cancel")
+        let settingsAlert = QRCodeReaderConfig.SettingsAlert(title: nil,
+                                                             message: "Go to Settings?",
+                                                             actionButtonTitle: "Settings",
+                                                             cancelButtonTitle: "Cancel")
         
-        let dataModel = QRCodeReaderDataModel(closeButtonModel: closeButtonModel,
-                                              infoTextModel: infoTextModel,
-                                              galleryButtonModel: galleryButtonModel,
-                                              qrCodeReaderPreviewLayerModel: qrCodeReaderPreviewLayerModel,
-                                              settingsAlertDataModel: settingsAlertDataModel)
+        let dataModel = QRCodeReaderConfig(closeButton: closeButton,
+                                           infoLabel: infoLabel,
+                                           galleryButton: galleryButton,
+                                           previewLayer: previewLayer,
+                                           settingsAlert: settingsAlert)
         let viewController = QRCodeReaderViewController(qrCodeReaderDataModel: dataModel)
         viewController.modalTransitionStyle = .coverVertical
         viewController.modalPresentationStyle = .fullScreen
@@ -129,9 +129,5 @@ extension HomeViewController: QRCodeReaderDelegate {
                                                 preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         viewController.present(alertController, animated: true)
-    }
-    
-    func qrCodeReaderDismiss(_ viewController: UIViewController) {
-        viewController.dismiss(animated: true)
     }
 }
