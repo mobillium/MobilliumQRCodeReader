@@ -81,7 +81,9 @@ public class QRCodeReaderViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if captureSession?.isRunning == false {
-            captureSession.startRunning()
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.captureSession.startRunning()
+            }
         }
     }
     
