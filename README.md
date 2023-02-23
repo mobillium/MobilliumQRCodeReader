@@ -3,6 +3,7 @@
 [![Build Status](https://github.com/mobillium/MobilliumQRCodeReader/actions/workflows/ci.yml/badge.svg)](https://github.com/mobillium/MobilliumQRCodeReader/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/cocoapods/v/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 [![Platform](https://img.shields.io/cocoapods/p/MobilliumQRCodeReader.svg?style=flat)](https://cocoapods.org/pods/MobilliumQRCodeReader)
 
@@ -36,6 +37,14 @@ Once you have your Swift package set up, adding MobilliumQRCodeReader as a depen
 dependencies: [
     .package(url: "https://github.com/mobillium/MobilliumQRCodeReader.git", .upToNextMajor(from: "1.1.0"))
 ]
+```
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate MobilliumQRCodeReader into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "mobillium/MobilliumQRCodeReader"
 ```
 
 ## Usage
