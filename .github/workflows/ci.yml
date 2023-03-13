@@ -8,37 +8,46 @@ on:
      
 jobs:
  Tests:
-     runs-on: macos-latest
+     runs-on: ${{ matrix.runsOn }}
      strategy:
         matrix:
-          destination: ['platform=iOS Simulator,name=iPhone 13,OS=15.2']
-          
-
+          include:
+            - destination: 'platform=iOS Simulator,name=iPhone 11,OS=13.7'
+              runsOn: 'macOS-11'
+              os: '13.7'
+              xc_version: '12.5.1'
+              xc_simulator_version: '11.7'
+            - destination: 'platform=iOS Simulator,name=iPhone 12,OS=14.5'
+              runsOn: 'macOS-11'
+              os: '14.5'
+              xc_version: '12.5.1'
+              xc_simulator_version: '12.5.1'
+            - destination: 'platform=iOS Simulator,name=iPhone 13,OS=15.5'
+              runsOn: 'macOS-12'
+              os: '15.5'
+              xc_version: '14.2'
+              xc_simulator_version: '13.4.1'
+            - destination: 'platform=iOS Simulator,name=iPhone 14,OS=16.2'
+              runsOn: 'macOS-12'
+              os: '16.2'
+              xc_version: '14.2'
+              xc_simulator_version: '14.2'
      env:
-       XC_VERSION: ${{ '13.2' }}
        XC_WORKSPACE: ${{ 'Example/MobilliumQRCodeReader.xcworkspace' }}
        XC_SCHEME: ${{ 'MobilliumQRCodeReader-Example' }}
-       
      steps:
-     - uses: devbotsxyz/xcode-select@v1
      - uses: actions/checkout@v3
      - name: Select latest Xcode
-       run: "sudo xcode-select -s /Applications/Xcode_$XC_VERSION.app"
+       run: "sudo xcode-select -s /Applications/Xcode_${{ matrix.xc_version }}.app"
      - name: Install Dependencies
        run: |
         cd Example
         pod install --repo-update
-     - name: Link to 14.8 Simulators
+     - name: Link to iOS ${{ matrix.os }} Simulators
        run: |
          echo "Creating Runtimes folder if needed..."
          sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
-         echo "Creating symlink of the iOS 14.8 runtime..."
-         sudo ln -s /Applications/Xcode_$XC_VERSION.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 14.8.simruntime
-     - name: Link to 15.4 Simulators
-       run: |
-         echo "Creating Runtimes folder if needed..."
-         sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
-         echo "Creating symlink of the iOS 15.4 runtime..."
-         sudo ln -s /Applications/Xcode_$XC_VERSION.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 15.4.simruntime
+         echo "Creating symlink of the iOS ${{ matrix.os }} runtime..."
+         sudo ln -s /Applications/Xcode_${{ matrix.xc_simulator_version }}.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ ${{ matrix.os }}.simruntime
      - name: Run Unit and UI Tests
        run: /usr/bin/xcodebuild test -workspace "$XC_WORKSPACE" -scheme "$XC_SCHEME" -destination '${{ matrix.destination }}'
